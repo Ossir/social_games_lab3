@@ -13,3 +13,17 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function (request, response) {
    response.sendfile(__dirname + '/index.html');
 });
+
+var io = require('socket.io').listen(server);
+
+io.configure(function () {
+   io.set("transports", ["xhr-polling"]);
+   io.set("polling duration", 10);
+});
+
+io.sockets.on('connection', function (socket) {
+   socket.emit('news', { hello: 'world' });
+   socket.on('my other event', function (data) {
+      console.log(data);
+   });
+});
