@@ -1,1 +1,1 @@
-web: node ../MyApp.js
+web: node social_games_lab3/MyApp.js
