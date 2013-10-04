@@ -1,0 +1,82 @@
+<html>
+	<body>
+		<canvas id="gameCanvas" width="600" height="500"></canvas>
+		<script src="createJS.js"></script>
+		<script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
+        <script src="http://code.createjs.com/tweenjs-0.5.0.min.js"></script>
+        <script src="http://code.createjs.com/soundjs-0.5.0.min.js"></script>
+        <script src="http://code.createjs.com/preloadjs-0.4.0.min.js"></script>
+        <script src="http://code.createjs.com/movieclip-0.7.0.min.js"></script>
+		<script>
+
+	    	function JSText(stage, text, x, y){
+	    		var txt = new createjs.Text(text, "bold 28pt Courier New", "#000000");
+	    		txt.x = x;
+	    		txt.y = y;
+				stage.addChild(txt);
+				stage.update();		
+	    	}
+
+	    	function JSLine(stage, x1, y1, x2, y2){
+				g = new createjs.Graphics()
+	            	.beginStroke("#000000")
+	            	.moveTo(x1,y1).lineTo(x2, y2);
+				line = new createjs.Shape(g);
+				stage.addChild(line);	   
+				stage.update(); 		
+	    	}
+
+	    	function JSRect(stage, x, y, width, height){
+				g  = new createjs.Graphics().s("#000000").f("#000000").drawRect(x,y,width,height);
+				bg = new createjs.Shape(g);
+				stage.addChild(bg);	   
+				stage.update(); 
+	    	}
+
+	    	function JSCircle(stage, x, y, radius){
+				g  = new createjs.Graphics().s("#000000").f("#000000").drawCircle(x,y,radius);
+				bg = new createjs.Shape(g);
+				stage.addChild(bg);	   
+				stage.update(); 
+	    	}
+
+	    	function JSImage(stage, name, x, y){
+	    		var image = new createjs.Bitmap(name);
+	    		image.x = x;
+	    		image.y = y;
+				stage.addChild(image);
+				stage.update();
+				return image;
+	    	}
+
+			function hello(event)
+			{
+				alert("clicked");
+				stage.update();
+			}
+
+			function handleTick(image)
+			{
+				if (image.x > 300)
+					image.x -= 10;
+			    stage.update();
+			}
+
+			var canvas = document.getElementById('gameCanvas');
+	    	var context = canvas.getContext('2d');
+	    	var stage = new createjs.Stage(canvas);
+	    	
+ 			stage.mouseEventsEnabled = true;	
+ 			JSText(stage,'jstext',120,100);
+ 			JSLine(stage,0,0,100,150);
+ 			JSRect(stage, 10,10,100,100);
+ 			JSCircle(stage, 200,200,10);
+ 			var image = JSImage(stage,"troll.jpg", 600, 300);
+ 			image.addEventListener("click", hello);
+
+			createjs.Ticker.addEventListener("tick", function(){handleTick(image)});
+
+	    // работа с канвой
+		</script>	
+	</body>
+</html>
