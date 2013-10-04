@@ -1,1 +1,1 @@
-web: node myApp.js
+web: node ../myApp.js
