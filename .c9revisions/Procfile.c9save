@@ -1,3 +1,4 @@
 {"ts":1380874574782,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
 {"contributors":[],"silentsave":false,"ts":1380874261112,"patch":[[{"diffs":[[1,"web: node myApp.js"]],"start1":0,"start2":0,"length1":0,"length2":18}]],"length":18,"saved":false}
 {"ts":1380875223551,"patch":[[{"diffs":[[0,"b: node "],[1,"../"],[0,"myApp.js"]],"start1":2,"start2":2,"length1":16,"length2":19}]],"length":21,"saved":false}
+{"ts":1380875344717,"patch":[[{"diffs":[[0," ../"],[-1,"m"],[1,"M"],[0,"yApp"]],"start1":9,"start2":9,"length1":9,"length2":9}]],"length":21,"saved":false}
