@@ -31,22 +31,22 @@ app.get('/', function (request, response) {
         }
         else
         {
-            if (user_found !== null)
-            {
-                db.users.update({ip_address: user.ip_address}, {$set: {updated_at: new Date()}}, function(err) {
-                   if(err) {
-                        return console.log('update error', err);
-                   }
-                   console.log('updated, user: ', user);
-               });            
-            }
-            else
+            if (user_found == null)
             {
                 db.users.insert(user, function(err){
                    if(err) {
                        return console.log('inser error', err);
                    }
                    console.log('inserted, user: ', user);
+               });
+            }
+            else
+            {
+                db.users.update({ip_address: user.ip_address}, {$set: {updated_at: new Date()}}, function(err) {
+                   if(err) {
+                        return console.log('update error', err);
+                   }
+                   console.log('updated, user: ', user);
                });
             }
         }
