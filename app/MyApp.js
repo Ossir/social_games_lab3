@@ -4,6 +4,25 @@ var app = express();
 var server = http.createServer(app);
 var port = process.env.PORT || 3000;
 var mongo = require('mongoskin');
+var VK = require('vkapi');
+
+var vk = new VK({
+    'appID'     : 4071906,
+    'appSecret' : '94EBfNeHFrCQ28GuQNWj',
+    'mode'      : 'sig'
+});
+
+var username = ""
+
+vk.setToken();
+vk.on('appServerTokenReady', function() {
+    vk.request('getProfiles', {'uids' : '8857627'});
+    // и так далее...
+    vk.on('done:getProfiles', function(_o) {
+    username = _o['response'][0]['first_name'];
+    });
+});
+
 var db = mongo.db('mongodb://user1:123123123@alex.mongohq.com:10088/social');
 if (db)
     console.log ('connected')
@@ -63,7 +82,7 @@ io.configure(function () {
 });
 
 io.sockets.on('connection', function (socket) {
-   socket.emit('news', { hello: 'world' });
+   socket.emit('news', { hello: username });
    socket.on('my other event', function (data) {
       console.log(data);
    });
