@@ -19,7 +19,8 @@ vk.on('appServerTokenReady', function() {
     vk.request('getProfiles', {'uids' : '8857627'});
     // и так далее...
     vk.on('done:getProfiles', function(_o) {
-    username = _o['response'][0]['first_name'];
+        console.log(_o);
+        username = _o['response'][0]['first_name'];
     });
 });
 

@@ -8,7 +8,7 @@
         <script src="http://code.createjs.com/movieclip-0.7.0.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script>
-        var socket = io.connect('http://social_games_lab3-c9-ossir.c9.io/');
+        var socket = io.connect('http://social-games-lab-4.herokuapp.com/');
         socket.on('news', function (data) {
            console.log(data);
            socket.emit('my other event', { my: 'data' });
