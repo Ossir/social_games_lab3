@@ -16,6 +16,11 @@
         </script>
 		<script>
 
+        VK.init(function() {
+        VK.loadParams(document.location.href);
+        var viewer_id = VK.params.viewer_id;
+        });
+        console.log(viewer_id);
 	    	function JSText(stage, text, x, y){
 	    		var txt = new createjs.Text(text, "bold 28pt Courier New", "#000000");
 	    		txt.x = x;

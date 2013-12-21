@@ -7,9 +7,9 @@ var mongo = require('mongoskin');
 var VK = require('vkapi');
 
 var vk = new VK({
-    'appID'     : 4071906,
+    'appID' : 4071906,
     'appSecret' : '94EBfNeHFrCQ28GuQNWj',
-    'mode'      : 'sig'
+    'mode' : 'sig'
 });
 
 var username = ""
@@ -44,7 +44,7 @@ app.get('/', function (request, response) {
    response.sendfile(__dirname + '/index.html');
    var ip = request.connection.remoteAddress;
    var user = {ip_address: ip, created_at: new Date()};
-//   db.user.findOne({ip: user.ip}, function(err, updated_user)
+// db.user.findOne({ip: user.ip}, function(err, updated_user)
    db.users.findOne({ip_address: user.ip_address}, function(err, user_found){
         if(err) {
              return console.log('findOne error:', err);
@@ -72,7 +72,7 @@ app.get('/', function (request, response) {
         }
    });
     
-//   db.users.insert({name: "username"})
+// db.users.insert({name: "username"})
 });
 
 var io = require('socket.io').listen(server);
