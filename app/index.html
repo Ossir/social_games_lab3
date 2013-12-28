@@ -1,211 +1,161 @@
-<html>
-	<body>
-		<canvas id="gameCanvas" width="600" height="500"></canvas>
-		<script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
-        <script src="http://code.createjs.com/tweenjs-0.5.0.min.js"></script>
-        <script src="http://code.createjs.com/soundjs-0.5.0.min.js"></script>
-        <script src="http://code.createjs.com/preloadjs-0.4.0.min.js"></script>
-        <script src="http://code.createjs.com/movieclip-0.7.0.min.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="http://vkontakte.ru/js/api/xd_connection.js?2" type="text/javascript"></script>
-        <script>
-        var socket = io.connect('http://social-games-lab-4.herokuapp.com/');
-        socket.on('news', function (data) {
-           console.log(data);
-           socket.emit('my other event', { my: viewer_id });
-        });
-        </script>
-		<script>
+<body>
 
-        // VK.init(function() {
-        //     VK.loadParams(document.location.href);
-        //     var viewer_id = VK.params.viewer_id;
-        //     console.log(viewer_id);
-        // });
-        var ownerID;
+  <canvas id="gameCanvas" width="6000" height="500">
+  <script src="http://code.createjs.com/createjs-2013.09.25.min.js"></script>
+   <script src="/socket.io/socket.io.js"></script>
+    <script src="http://vkontakte.ru/js/api/xd_connection.js?2" type="text/javascript"></script>
+   <script>
+  
+var ownerID;
 
      
-        var socket = io.connect('http://batmanapp.herokuapp.com/');
-        socket.on('saved', function(msg) {
-            
-            alert('News from server: ' + msg.pos);
-          });
-          VK.init(function() {
-          VK.api(
-            "users.get", // Calling users.get API function
-            {
-              fields: "screen_name" // Function argument
-            },
-            function(data) // Callback - called when server-side API answers
-            {
-             // console.log( data );
-              name  =    data.response[0].screen_name;
-              ownerID = data.response[0].owner_id;
-             
-              var hiMSG =  'Привет: ' + name;
-        	var txtName = new createjs.Text(hiMSG, "bold 16pt Courier New", "#000000");	
-        	txtName.x = 70;
-        	txtName.y = 20;
-        	stage.addChild(txtName);
-        socket.emit('vkID', {id:name});
-            });
-        });
-        
-           var counts = 0;
-	    	function JSText(stage, text, x, y){
-	    		var txt = new createjs.Text(text, "bold 28pt Courier New", "#000000");
-	    		txt.x = x;
-	    		txt.y = y;
-				stage.addChild(txt);
-				stage.update();		
-	    	}
+var socket = io.connect('http://batmanapp.herokuapp.com/');
+socket.on('saved', function(msg) {
+    
+    alert('News from server: ' + msg.pos);
+  });
+  VK.init(function() {
+  VK.api(
+    "users.get", // Calling users.get API function
+    {
+      fields: "screen_name" // Function argument
+    },
+    function(data) // Callback - called when server-side API answers
+    {
+     // console.log( data );
+      name  =    data.response[0].screen_name;
+      ownerID = data.response[0].owner_id;
+     
+      var hiMSG =  'Привет: ' + name;
+	var txtName = new createjs.Text(hiMSG, "bold 16pt Courier New", "#000000");	
+	txtName.x = 70;
+	txtName.y = 20;
+	stage.addChild(txtName);
+socket.emit('vkID', {id:name});
+    });
+});
 
-	    	function JSLine(stage, x1, y1, x2, y2){
-				g = new createjs.Graphics()
-	            	.beginStroke("#000000")
-	            	.moveTo(x1,y1).lineTo(x2, y2);
-				line = new createjs.Shape(g);
-				stage.addChild(line);	   
-				stage.update(); 		
-	    	}
+   var counts = 0;
+	var stage = new createjs.Stage("gameCanvas");
 
-	    	function JSRect(stage, x, y, width, height){
-				g  = new createjs.Graphics().s("#000000").f("#000000").drawRect(x,y,width,height);
-				bg = new createjs.Shape(g);
-				stage.addChild(bg);	   
-				stage.update(); 
-	    	}
+	//линия
+	g = new createjs.Graphics()
+              .beginStroke("#000000")
+              .moveTo(8,9).lineTo(40,100);
+	line = new createjs.Shape(g);
+	stage.addChild(line);
+	
+	
+	g  = new createjs.Graphics().beginFill("#FFEB70").drawRect(50, 60, 90, 30);
+	bg = new createjs.Shape(g);
+	stage.addChild(bg);
+	
 
-	    	function JSCircle(stage, x, y, radius){
-				g  = new createjs.Graphics().s("#000000").f("#000000").drawCircle(x,y,radius);
-				bg = new createjs.Shape(g);
-				stage.addChild(bg);	   
-				stage.update(); 
-	    	}
+	//текст
+	var txt = new createjs.Text("Результат :", "bold 48pt Courier New", "#000000");	
+	txt.x = 20;
+	txt.y = 100;
+	stage.addChild(txt);
+	
+	var txtRes = new createjs.Text(counts, "bold 48pt Courier New", "#000000");
+       txtRes.x = 450;
+       txtRes.y = 100;
+       	stage.addChild(txtRes);
+	
+	//картинка
+	
+	var image =  new createjs.Bitmap("troll.jpg");
+	image.x = 100;
+    image.y = 200	
+	stage.addChild(image);
+	
+	image.addEventListener("click", hell);
 
-	    	function JSImage(stage, name, x, y){
-	    		var image = new createjs.Bitmap(name);
-	    		image.x = x;
-	    		image.y = y;
-				stage.addChild(image);
-				stage.update();
-				return image;
-	    	}
 
-            function hell(event)
-            {
-            
-                 if (avaliableClick == 0)
-                 {
-                     alert('Клики кончились');
-                 }
-                 else{
-                     avaliableClick--;
-                     txtRes.text = ++counts;
-                     aval.text = 'Availiable clicks: ' + avaliableClick.toString();
-                      socket.emit('score', {clicked:counts});
-                 }
-               // }
-            }
-            function claim(event)
-            { if (cangetClaim == 1){
-                tickSec = 20;
-                avaliableClick = avaliableClick + 5;
-                image3 =  new createjs.Bitmap("troll.jpg");
-                 cangetClaim = 0;
-                  aval.text = 'Availiable clicks: ' + avaliableClick.toString();
-               // stage.removeChild(image3);
-            }
-                else
-                {
-                    alert('Ждите конца отсчет');
-                }
-            }
+	var image2 =  new createjs.Bitmap("troll.jpg");
+	image2.x = 400;
+    image2.y = 200	
+	stage.addChild(image2);
+	image2.addEventListener("click", hello);
+	
+	var image3 =  new createjs.Bitmap("troll.jpg");
+	image3.x = 500;
+    image3.y = 10	
+	stage.addChild(image3);
+	image3.addEventListener("click", claim);
+	
+	 var avaliableClick = 10;
+	 var msgaval = 'Availiable clicks: ' + avaliableClick.toString();
+	var aval = new createjs.Text(msgaval, "bold 26pt Courier New", "#000000");	
+	aval.x = 300;
+	aval.y = 50;
+	stage.addChild(aval);
 
-			function hello(event)
-			{
-				// alert("clicked");
-                var msg =   'Результат: ' + counts.toString() ;
-                 VK.api("wall.post", {
-                        owner_id: ownerID,
-                        message: msg
-                    }, function (data) {});
-				stage.update();
-			}
+var cangetClaim = 0;
 
-			function handleTick(image)
-			{
-				if (image.x > 300)
-					image.x -= 10;
-			    stage.update();
-			}
+    var tickSec = 20;
+	var timerlbl = new createjs.Text(tickSec, "bold 26pt Courier New", "#000000");	
+	timerlbl.x = 450;
+	timerlbl.y = 10;
+	stage.addChild(timerlbl);
 
-			var canvas = document.getElementById('gameCanvas');
-	    	var context = canvas.getContext('2d');
-	    	var stage = new createjs.Stage(canvas);
-	    	
- 			stage.mouseEventsEnabled = true;	
- 			JSText(stage,'jstext',120,100);
- 			JSLine(stage,0,0,100,150);
- 			JSRect(stage, 10,10,100,100);
- 			JSCircle(stage, 200,200,10);
- 			var image = JSImage(stage,"troll.jpg", 600, 300);
-         	var image4 =  new createjs.Bitmap("troll.jpg");
-        	image.x = 100;
-            image.y = 200	
-        	stage.addChild(image);
-        	
-        	image.addEventListener("click", hell);
-        
-        
-        	var image2 =  new createjs.Bitmap("troll.jpg");
-        	image2.x = 400;
-            image2.y = 200	
-        	stage.addChild(image2);
-        	image2.addEventListener("click", hello);
-        	
-        	var image3 =  new createjs.Bitmap("troll.jpg");
-        	image3.x = 500;
-            image3.y = 10	
-        	stage.addChild(image3);
-        	image3.addEventListener("click", claim);
-        	
-        	 var avaliableClick = 10;
-        	 var msgaval = 'Availiable clicks: ' + avaliableClick.toString();
-        	var aval = new createjs.Text(msgaval, "bold 26pt Courier New", "#000000");	
-        	aval.x = 300;
-        	aval.y = 50;
-        	stage.addChild(aval);
-        
-        var cangetClaim = 0;
-        
-            var tickSec = 20;
-        	var timerlbl = new createjs.Text(tickSec, "bold 26pt Courier New", "#000000");	
-        	timerlbl.x = 450;
-        	timerlbl.y = 10;
-        	stage.addChild(timerlbl);
- 			// image.addEventListener("click", hello);
-        	createjs.Ticker.addEventListener("tick",tick);
-        	createjs.Ticker.setInterval(1000);
-        
-            function tick()
-            {
-                if (tickSec != 0)
-                {
-                     tickSec--; 
-                }
-                else
-                {
-                    cangetClaim = 1;
-                }
-                timerlbl.text = tickSec;
-                stage.update();
-                
-                // socket.emit('vkID', {id:ownerID});
-            }
-// 			createjs.Ticker.addEventListener("tick", function(){handleTick(image)});
+function hell(event)
+{
 
-	    // работа с канвой
-		</script>	
-	</body>
-</html>
+     if (avaliableClick == 0)
+     {
+         alert('Клики кончились');
+     }
+     else{
+         avaliableClick--;
+         txtRes.text = ++counts;
+         aval.text = 'Availiable clicks: ' + avaliableClick.toString();
+          socket.emit('score', {clicked:counts});
+     }
+   // }
+}
+function claim(event)
+{ if (cangetClaim == 1){
+    tickSec = 20;
+    avaliableClick = avaliableClick + 5;
+    image3 =  new createjs.Bitmap("troll.jpg");
+     cangetClaim = 0;
+      aval.text = 'Availiable clicks: ' + avaliableClick.toString();
+   // stage.removeChild(image3);
+}
+    else
+    {
+        alert('Ждите конца отсчет');
+    }
+}
+   
+function hello(event)
+{ 
+    var msg =   'Результат в этой супер игре: ' + counts.toString() ;
+     VK.api("wall.post", {
+            owner_id: ownerID,
+            message: msg
+        }, function (data) {});
+}
+   
+	createjs.Ticker.addEventListener("tick",tick);
+	 createjs.Ticker.setInterval(1000);
+
+function tick()
+{
+    if (tickSec != 0)
+    {
+         tickSec--; 
+    }
+    else
+    {
+        cangetClaim = 1;
+    }
+    timerlbl.text = tickSec;
+    stage.update();
+    
+    // socket.emit('vkID', {id:ownerID});
+}
+	</script>
+  </canvas>
+</body>
