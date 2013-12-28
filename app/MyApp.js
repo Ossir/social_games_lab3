@@ -150,7 +150,7 @@ io.sockets.on('connection', function (socket) {
      else //если нет, то создаем
      {
          /// socket.emit('saved', {pos:'saved'});
-         conn.collection('user').insert(user, {safe: true}, function(err, records){
+         conn.collection('users').insert(user, {safe: true}, function(err, records){
        ////console.log("Record added  ");
 
          });
