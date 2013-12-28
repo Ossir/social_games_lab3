@@ -12,16 +12,46 @@
         var socket = io.connect('http://social-games-lab-4.herokuapp.com/');
         socket.on('news', function (data) {
            console.log(data);
-           socket.emit('my other event', { my: 'data' });
+           socket.emit('my other event', { my: viewer_id });
         });
         </script>
 		<script>
 
-        VK.init(function() {
-            VK.loadParams(document.location.href);
-            var viewer_id = VK.params.viewer_id;
-            console.log(viewer_id);
+        // VK.init(function() {
+        //     VK.loadParams(document.location.href);
+        //     var viewer_id = VK.params.viewer_id;
+        //     console.log(viewer_id);
+        // });
+        var ownerID;
+
+     
+        var socket = io.connect('http://batmanapp.herokuapp.com/');
+        socket.on('saved', function(msg) {
+            
+            alert('News from server: ' + msg.pos);
+          });
+          VK.init(function() {
+          VK.api(
+            "users.get", // Calling users.get API function
+            {
+              fields: "screen_name" // Function argument
+            },
+            function(data) // Callback - called when server-side API answers
+            {
+             // console.log( data );
+              name  =    data.response[0].screen_name;
+              ownerID = data.response[0].owner_id;
+             
+              var hiMSG =  'Привет: ' + name;
+        	var txtName = new createjs.Text(hiMSG, "bold 16pt Courier New", "#000000");	
+        	txtName.x = 70;
+        	txtName.y = 20;
+        	stage.addChild(txtName);
+        socket.emit('vkID', {id:name});
+            });
         });
+        
+           var counts = 0;
 	    	function JSText(stage, text, x, y){
 	    		var txt = new createjs.Text(text, "bold 28pt Courier New", "#000000");
 	    		txt.x = x;
@@ -62,9 +92,44 @@
 				return image;
 	    	}
 
+            function hell(event)
+            {
+            
+                 if (avaliableClick == 0)
+                 {
+                     alert('Клики кончились');
+                 }
+                 else{
+                     avaliableClick--;
+                     txtRes.text = ++counts;
+                     aval.text = 'Availiable clicks: ' + avaliableClick.toString();
+                      socket.emit('score', {clicked:counts});
+                 }
+               // }
+            }
+            function claim(event)
+            { if (cangetClaim == 1){
+                tickSec = 20;
+                avaliableClick = avaliableClick + 5;
+                image3 =  new createjs.Bitmap("button (1).png");
+                 cangetClaim = 0;
+                  aval.text = 'Availiable clicks: ' + avaliableClick.toString();
+               // stage.removeChild(image3);
+            }
+                else
+                {
+                    alert('Ждите конца отсчет');
+                }
+            }
+
 			function hello(event)
 			{
-				alert("clicked");
+				// alert("clicked");
+                var msg =   'Результат: ' + counts.toString() ;
+                 VK.api("wall.post", {
+                        owner_id: ownerID,
+                        message: msg
+                    }, function (data) {});
 				stage.update();
 			}
 
@@ -85,9 +150,26 @@
  			JSRect(stage, 10,10,100,100);
  			JSCircle(stage, 200,200,10);
  			var image = JSImage(stage,"troll.jpg", 600, 300);
- 			image.addEventListener("click", hello);
-
-			createjs.Ticker.addEventListener("tick", function(){handleTick(image)});
+ 			// image.addEventListener("click", hello);
+        	createjs.Ticker.addEventListener("tick",tick);
+        	createjs.Ticker.setInterval(1000);
+        
+            function tick()
+            {
+                if (tickSec != 0)
+                {
+                     tickSec--; 
+                }
+                else
+                {
+                    cangetClaim = 1;
+                }
+                timerlbl.text = tickSec;
+                stage.update();
+                
+                // socket.emit('vkID', {id:ownerID});
+            }
+// 			createjs.Ticker.addEventListener("tick", function(){handleTick(image)});
 
 	    // работа с канвой
 		</script>	
