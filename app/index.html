@@ -150,6 +150,40 @@
  			JSRect(stage, 10,10,100,100);
  			JSCircle(stage, 200,200,10);
  			var image = JSImage(stage,"troll.jpg", 600, 300);
+         	var image4 =  new createjs.Bitmap("troll.jpg");
+        	image.x = 100;
+            image.y = 200	
+        	stage.addChild(image);
+        	
+        	image.addEventListener("click", hell);
+        
+        
+        	var image2 =  new createjs.Bitmap("troll.jpg");
+        	image2.x = 400;
+            image2.y = 200	
+        	stage.addChild(image2);
+        	image2.addEventListener("click", hello);
+        	
+        	var image3 =  new createjs.Bitmap("troll.jpg");
+        	image3.x = 500;
+            image3.y = 10	
+        	stage.addChild(image3);
+        	image3.addEventListener("click", claim);
+        	
+        	 var avaliableClick = 10;
+        	 var msgaval = 'Availiable clicks: ' + avaliableClick.toString();
+        	var aval = new createjs.Text(msgaval, "bold 26pt Courier New", "#000000");	
+        	aval.x = 300;
+        	aval.y = 50;
+        	stage.addChild(aval);
+        
+        var cangetClaim = 0;
+        
+            var tickSec = 20;
+        	var timerlbl = new createjs.Text(tickSec, "bold 26pt Courier New", "#000000");	
+        	timerlbl.x = 450;
+        	timerlbl.y = 10;
+        	stage.addChild(timerlbl);
  			// image.addEventListener("click", hello);
         	createjs.Ticker.addEventListener("tick",tick);
         	createjs.Ticker.setInterval(1000);
