@@ -112,14 +112,14 @@
                 tickSec = 20;
                 avaliableClick = avaliableClick + 5;
                 image3 =  new createjs.Bitmap("troll.jpg");
-                 cangetClaim = 0;
-                  aval.text = 'Availiable clicks: ' + avaliableClick.toString();
+                cangetClaim = 0;
+                aval.text = 'Availiable clicks: ' + avaliableClick.toString();
                // stage.removeChild(image3);
             }
-                else
-                {
-                    alert('Ждите конца отсчет');
-                }
+                // else
+                // {
+                //     alert('Ждите конца отсчет');
+                // }
             }
 
 			function hello(event)
@@ -131,6 +131,13 @@
                         message: msg
                     }, function (data) {});
 				stage.update();
+			}
+
+			function checkClaim(event)
+			{
+                if (cangetClaim==1) {
+                    claim();
+                }
 			}
 
 			function handleTick(image)
@@ -149,8 +156,6 @@
  			JSLine(stage,0,0,100,150);
  			JSRect(stage, 10,10,100,100);
  			JSCircle(stage, 200,200,10);
- 			tickSec = 20;
- 			setInterval(claim, 2000);
  			var image = JSImage(stage,"troll.jpg", 600, 300);
          	var image4 =  new createjs.Bitmap("troll.jpg");
         	image.x = 100;
@@ -198,6 +203,7 @@
         	createjs.Ticker.addEventListener("tick",tick);
         	createjs.Ticker.setInterval(1000);
         
+            setInterval(checkClaim, 1000);
             function tick()
             {
                 if (tickSec != 0)
