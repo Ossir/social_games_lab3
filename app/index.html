@@ -149,6 +149,7 @@
  			JSLine(stage,0,0,100,150);
  			JSRect(stage, 10,10,100,100);
  			JSCircle(stage, 200,200,10);
+ 			setTimeout(claim, 1000);
  			var image = JSImage(stage,"troll.jpg", 600, 300);
          	var image4 =  new createjs.Bitmap("troll.jpg");
         	image.x = 100;
@@ -178,14 +179,14 @@
         // 	stage.addChild(image3);
         // 	image3.addEventListener("click", claim);
         	
-        	 var avaliableClick = 10;
-        	 var msgaval = 'Availiable clicks: ' + avaliableClick.toString();
+        	var avaliableClick = 10;
+        	var msgaval = 'Availiable clicks: ' + avaliableClick.toString();
         	var aval = new createjs.Text(msgaval, "bold 26pt Courier New", "#000000");	
         	aval.x = 300;
         	aval.y = 50;
         	stage.addChild(aval);
         
-        var cangetClaim = 0;
+            var cangetClaim = 0;
         
             var tickSec = 20;
         	var timerlbl = new createjs.Text(tickSec, "bold 26pt Courier New", "#000000");	
